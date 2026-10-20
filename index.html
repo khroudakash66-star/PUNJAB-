@@ -1,791 +1,124 @@
 <!DOCTYPE html>
 <html lang="pa">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>PUNJAB - Social App</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      background: #121212;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 15px;
-    }
-
-    .phone-frame {
-      width: 390px;
-      height: 844px;
-      background: #ffffff;
-      border-radius: 44px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 0 10px #222;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .status-bar {
-      height: 44px;
-      padding: 0 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-      font-weight: 600;
-      z-index: 30;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      color: #000;
-    }
-    .status-bar.light { color: #fff; }
-
-    .screen {
-      flex: 1;
-      display: none;
-      flex-direction: column;
-      height: 100%;
-      overflow: hidden;
-      position: relative;
-      background: #fff;
-    }
-    .screen.active { display: flex; }
-
-    /* LOGIN SCREEN WITH OTP */
-    #login-screen {
-      background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%),
-                  url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
-      justify-content: space-between;
-      align-items: center;
-      padding: 80px 28px 40px;
-      color: #fff;
-    }
-
-    .punjab-stamp-logo {
-      width: 105px;
-      height: 105px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.88);
-      border: 3.5px solid #111;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-    .punjab-stamp-logo svg {
-      width: 95px;
-      height: 95px;
-    }
-
-    .login-card {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-    .login-card h3 {
-      font-size: 18px;
-      margin-bottom: 12px;
-      text-align: center;
-    }
-    .login-input {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: none;
-      background: #fff;
-      color: #111;
-      font-size: 15px;
-      outline: none;
-      margin-bottom: 10px;
-    }
-    .login-btn {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      background: #0095f6;
-      color: #fff;
-      border: none;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    /* APP HEADER */
-    .app-header {
-      padding: 48px 16px 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #efefef;
-      background: #fff;
-      z-index: 10;
-    }
-    .brand-title {
-      font-size: 23px;
-      font-weight: 900;
-      letter-spacing: 0.8px;
-      color: #111;
-    }
-    .header-icons {
-      display: flex;
-      gap: 18px;
-      font-size: 21px;
-      color: #111;
-    }
-    .header-icons i { cursor: pointer; }
-
-    .scroll-area {
-      flex: 1;
-      overflow-y: auto;
-      padding-bottom: 70px;
-    }
-    .scroll-area::-webkit-scrollbar { display: none; }
-
-    /* STORIES */
-    .stories-bar {
-      display: flex;
-      gap: 14px;
-      padding: 12px 14px;
-      border-bottom: 1px solid #f0f0f0;
-      overflow-x: auto;
-    }
-    .stories-bar::-webkit-scrollbar { display: none; }
-    .story-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
-      flex-shrink: 0;
-      width: 68px;
-    }
-    .story-ring {
-      width: 66px;
-      height: 66px;
-      border-radius: 50%;
-      padding: 2.5px;
-      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .story-ring.my-story { background: #dbdbdb; }
-    .story-ring img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2.5px solid #fff;
-      background: #fff;
-    }
-    .add-story-badge {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #0095f6;
-      color: #fff;
-      font-size: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 2px solid #fff;
-    }
-    .story-name {
-      font-size: 11.5px;
-      color: #262626;
-      max-width: 66px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    /* POST CARD */
-    .post-card {
-      border-bottom: 1px solid #efefef;
-      padding-bottom: 12px;
-      margin-bottom: 6px;
-    }
-    .post-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-    }
-    .post-user {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .post-user img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid #ddd;
-    }
-    .post-user-info h4 { font-size: 13.5px; font-weight: 700; color: #111; }
-    .post-user-info p { font-size: 11px; color: #666; }
-    .post-img-wrap {
-      width: 100%;
-      height: 350px;
-      position: relative;
-      background: #f5f5f5;
-      overflow: hidden;
-    }
-    .post-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .post-actions {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 14px 6px;
-      font-size: 22px;
-    }
-    .post-actions-left { display: flex; gap: 16px; align-items: center; }
-    .post-actions i { cursor: pointer; }
-    .post-actions i.fa-solid.fa-heart { color: #ed4956; }
-    .post-likes { font-size: 13.5px; font-weight: 700; padding: 0 14px 4px; }
-    .post-caption { font-size: 13.5px; padding: 0 14px; line-height: 1.4; color: #262626; }
-    .post-caption b { margin-right: 5px; }
-    .hashtags { color: #00376b; font-weight: 500; }
-
-    /* REELS SCREEN */
-    #reels-screen { background: #000; color: #fff; }
-    .reel-container {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 52px 16px 85px;
-    }
-    .reel-top { display: flex; justify-content: space-between; align-items: center; font-size: 20px; font-weight: 700; }
-    .reel-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
-    .reel-info { max-width: 78%; }
-    .reel-creator { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .reel-creator img { width: 38px; height: 38px; border-radius: 50%; border: 2px solid #fff; object-fit: cover; }
-    .follow-btn { background: rgba(255,255,255,0.2); border: 1px solid #fff; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
-    .reel-side-actions { display: flex; flex-direction: column; align-items: center; gap: 20px; font-size: 24px; }
-    .reel-side-actions div { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
-    .reel-side-actions span { font-size: 12px; font-weight: 600; }
-
-    /* EXPLORE */
-    .search-box { padding: 48px 16px 10px; background: #fff; }
-    .search-input-wrap {
-      background: #efefef;
-      border-radius: 10px;
-      padding: 9px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: #8e8e8e;
-    }
-    .search-input-wrap input { border: none; background: transparent; outline: none; width: 100%; font-size: 14px; color: #111; }
-    .category-tabs {
-      display: flex;
-      gap: 16px;
-      padding: 10px 16px;
-      border-bottom: 1px solid #efefef;
-      overflow-x: auto;
-      font-size: 13.5px;
-      font-weight: 600;
-      color: #777;
-    }
-    .category-tabs span.active { color: #111; border-bottom: 2px solid #111; padding-bottom: 6px; }
-
-    /* PROFILE */
-    .profile-top-bar { padding: 48px 16px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: 700; }
-    .profile-stats-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px 14px; }
-    .profile-avatar-wrap { position: relative; width: 82px; height: 82px; cursor: pointer; }
-    .profile-avatar-wrap img { width: 82px; height: 82px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd; }
-    .change-dp-badge {
-      position: absolute; bottom: 0; right: 0;
-      background: #0095f6; color: #fff; width: 26px; height: 26px;
-      border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 12px; border: 2px solid #fff;
-    }
-    .stats-box { display: flex; gap: 22px; text-align: center; }
-    .stats-box div b { display: block; font-size: 16px; }
-    .stats-box div span { font-size: 12.5px; color: #555; }
-    .profile-bio { padding: 0 16px 12px; font-size: 13.5px; line-height: 1.45; }
-    .profile-actions { display: flex; gap: 8px; padding: 0 16px 14px; }
-    .btn-edit-profile { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #dbdbdb; background: #fafafa; font-weight: 600; font-size: 13.5px; cursor: pointer; }
-    .profile-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-    .profile-grid img { width: 100%; height: 125px; object-fit: cover; }
-
-    /* BOTTOM NAV */
-    .bottom-nav {
-      height: 60px; background: #fff; border-top: 1px solid #e5e5e5;
-      display: flex; justify-content: space-around; align-items: center;
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 20;
-    }
-    .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10.5px; color: #777; cursor: pointer; gap: 3px; }
-    .nav-item i { font-size: 20px; }
-    .nav-item.active { color: #000; font-weight: 700; }
-    .nav-add-btn { width: 38px; height: 38px; border-radius: 50%; background: #111; color: #fff; display: flex; justify-content: center; align-items: center; font-size: 18px; cursor: pointer; }
-
-    /* MODALS */
-    .modal-overlay {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.75);
-      z-index: 50; display: none; justify-content: center; align-items: flex-end;
-    }
-    .modal-overlay.active { display: flex; }
-    .bottom-sheet { width: 100%; background: #fff; border-radius: 22px 22px 0 0; padding: 20px 18px 30px; max-height: 85%; overflow-y: auto; }
-    .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
-    .sheet-header h3 { font-size: 17px; font-weight: 700; }
-    .menu-option { display: flex; align-items: center; justify-content: space-between; padding: 14px 8px; border-bottom: 1px solid #f0f0f0; cursor: pointer; font-size: 15px; font-weight: 500; }
-
-    /* STORY VIEWER */
-    #story-viewer { background: #000; align-items: center; flex-direction: column; justify-content: space-between; padding: 48px 16px 30px; color: #fff; background-size: cover; background-position: center; }
-    .story-progress { width: 100%; height: 3px; background: rgba(255,255,255,0.35); border-radius: 2px; overflow: hidden; margin-bottom: 12px; }
-    .story-progress-bar { width: 100%; height: 100%; background: #fff; animation: progress 4s linear forwards; }
-    @keyframes progress { from { width: 0%; } to { width: 100%; } }
-    .story-top-user { width: 100%; display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.35); padding: 8px 12px; border-radius: 30px; }
-    .story-top-left { display: flex; align-items: center; gap: 10px; }
-    .story-top-left img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; }
-
-    .toast-msg {
-      position: absolute; top: 56px; left: 50%; transform: translateX(-50%);
-      background: #111; color: #fff; padding: 10px 18px; border-radius: 25px;
-      font-size: 13px; font-weight: 600; z-index: 100; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punjab - Social App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .phone-frame {
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            max-height: 850px;
+            background: url('watermarked_img_13770963300162300816.png') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 20px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .phone-frame::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        .logo-container, .login-box {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo-container {
+            margin-top: 40px;
+        }
+        .logo-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            /* ਲੋਗੋ ਨੂੰ ਬਿਲਕੁਲ ਸਿੱਧਾ ਕਰਨ ਲਈ */
+            transform: rotate(0deg); 
+        }
+        .login-box {
+            background: rgba(20, 20, 20, 0.85);
+            padding: 25px 20px;
+            border-radius: 16px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+        .input-field::placeholder {
+            color: #bbb;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #0095f6;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-btn:hover {
+            background: #1877f2;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="phone-frame">
-    <div id="toast" class="toast-msg"></div>
+    <div class="phone-frame">
+        <!-- ਸਿੱਧੇ ਲੋਗੋ ਵਾਲਾ ਹਿੱਸਾ -->
+        <div class="logo-container">
+            <img src="watermarked_img_13770963300162300816.png" alt="Punjab Logo" class="logo-img">
+        </div>
 
-    <input type="file" id="dp-file-input" accept="image/*" style="display: none;" onchange="handleProfilePhotoUpload(event)">
-    <input type="file" id="story-file-input" accept="image/*" style="display: none;" onchange="handleStoryUpload(event)">
-
-    <div id="status-bar" class="status-bar light">
-      <span>9:41</span>
-      <div>
-        <i class="fa-solid fa-signal"></i>
-        <i class="fa-solid fa-wifi" style="margin: 0 4px;"></i>
-        <i class="fa-solid fa-battery-full"></i>
-      </div>
+        <!-- ਯੂਜ਼ਰ ਆਈਡੀ ਅਤੇ ਪਾਸਵਰਡ ਲੌਗਇਨ ਫਾਰਮ -->
+        <div class="login-box">
+            <input type="text" class="input-field" placeholder="ਯੂਜ਼ਰ ਆਈਡੀ (User ID)" required>
+            <input type="password" class="input-field" placeholder="ਪਾਸਵਰਡ (Password)" required>
+            <button class="login-btn">ਲੌਗਇਨ ਕਰੋ</button>
+        </div>
     </div>
 
-    <!-- ================= 1. LOGIN & OTP SCREEN ================= -->
-    <div id="login-screen" class="screen active">
-      <div class="punjab-stamp-logo">
-        <svg viewBox="0 0 200 200">
-          <circle cx="100" cy="100" r="92" fill="none" stroke="#111" stroke-width="4" stroke-dasharray="120 4 80 3"/>
-          <circle cx="100" cy="100" r="62" fill="none" stroke="#111" stroke-width="2.5"/>
-          <path id="topArc" d="M 32,100 A 68,68 0 1,1 168,100" fill="none"/>
-          <path id="bottomArc" d="M 168,100 A 68,68 0 1,1 32,100" fill="none"/>
-          <text font-size="24" font-weight="900" fill="#111" text-anchor="middle"><textPath href="#topArc" startOffset="50%">ਪੰਜਾਬ</textPath></text>
-          <text font-size="20" font-weight="800" fill="#111" text-anchor="middle" letter-spacing="3"><textPath href="#bottomArc" startOffset="50%">PUNJAB</textPath></text>
-          <circle cx="22" cy="100" r="4.5" fill="#111"/>
-          <circle cx="178" cy="100" r="4.5" fill="#111"/>
-          <path d="M98,62 L112,72 L122,88 L134,98 L128,115 L114,126 L88,132 L70,122 L66,105 L78,86 Z" fill="#111"/>
-        </svg>
-      </div>
-
-      <div class="login-card">
-        <div id="step-phone">
-          <h3 style="color:#fff;">ਮੋਬਾਈਲ ਨੰਬਰ ਨਾਲ ਲੌਗਇਨ</h3>
-          <input type="tel" id="mobile-number-input" class="login-input" placeholder="ਮੋਬਾਈਲ ਨੰਬਰ (ਜਿਵੇਂ 98150XXXXX)" maxlength="10">
-          <button class="login-btn" onclick="sendOTP()">OTP ਭੇਜੋ (Send OTP)</button>
-        </div>
-
-        <div id="step-otp" style="display: none;">
-          <h3 style="color:#fff;">OTP ਵੈਰੀਫਿਕੇਸ਼ਨ</h3>
-          <p id="otp-hint" style="font-size:12px; text-align:center; margin-bottom:10px; color:#ddd;"></p>
-          <input type="text" id="otp-input" class="login-input" placeholder="4 ਅੰਕਾਂ ਦਾ OTP ਭਰੋ" maxlength="4">
-          <button class="login-btn" onclick="verifyOTP()">ਵੈਰੀਫਾਈ ਕਰੋ ਤੇ ਦਾਖਲ ਹੋਵੋ</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= 2. HOME FEED SCREEN ================= -->
-    <div id="home-screen" class="screen">
-      <div class="app-header">
-        <div class="brand-title">PUNJAB</div>
-        <div class="header-icons">
-          <i class="fa-regular fa-heart" onclick="showToast('ਨਵੀਆਂ ਨੋਟੀਫਿਕੇਸ਼ਨਾਂ')"></i>
-          <i class="fa-regular fa-paper-plane" onclick="showToast('ਮੈਸੇਜ ਇਨਬਾਕਸ')"></i>
-        </div>
-      </div>
-
-      <div class="scroll-area">
-        <div class="stories-bar">
-          <div class="story-item" onclick="openMyStory()">
-            <div class="story-ring my-story">
-              <img id="home-story-user-dp" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Your Story">
-              <div class="add-story-badge" onclick="event.stopPropagation(); document.getElementById('story-file-input').click();">
-                <i class="fa-solid fa-plus"></i>
-              </div>
-            </div>
-            <span class="story-name">Your Story</span>
-          </div>
-
-          <div class="story-item" onclick="viewOtherStory('punjab_traveller', 'https://images.unsplash.com/photo-1588096344356-9b497caeeb64?auto=format&fit=crop&w=300&q=80', 'https://images.unsplash.com/photo-1588096344356-9b497caeeb64?auto=format&fit=crop&w=800&q=80')">
-            <div class="story-ring"><img src="https://images.unsplash.com/photo-1588096344356-9b497caeeb64?auto=format&fit=crop&w=300&q=80" alt="Story"></div>
-            <span class="story-name">punjab_trav...</span>
-          </div>
-        </div>
-
-        <div class="post-card">
-          <div class="post-header">
-            <div class="post-user">
-              <img src="https://images.unsplash.com/photo-1588096344356-9b497caeeb64?auto=format&fit=crop&w=200&q=80" alt="user">
-              <div class="post-user-info">
-                <h4>punjab_traveller</h4>
-                <p>Amritsar, Punjab</p>
-              </div>
-            </div>
-            <i class="fa-solid fa-ellipsis"></i>
-          </div>
-          <div class="post-img-wrap" ondblclick="toggleLike(this.nextElementSibling.querySelector('.heart-icon'))">
-            <img src="https://images.unsplash.com/photo-1588096344356-9b497caeeb64?auto=format&fit=crop&w=800&q=80" alt="Golden Temple">
-          </div>
-          <div class="post-actions">
-            <div class="post-actions-left">
-              <i class="fa-solid fa-heart heart-icon" onclick="toggleLike(this)"></i>
-              <i class="fa-regular fa-comment"></i>
-              <i class="fa-regular fa-paper-plane"></i>
-            </div>
-            <i class="fa-regular fa-bookmark"></i>
-          </div>
-          <div class="post-likes">12.4K likes</div>
-          <div class="post-caption">
-            <b>punjab_traveller</b> The Golden Temple ✨<br>
-            <span class="hashtags">#Amritsar #GoldenTemple #Punjab</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= 3. REELS SCREEN ================= -->
-    <div id="reels-screen" class="screen">
-      <div id="reel-bg" class="reel-container" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=80');">
-        <div class="reel-top">
-          <span>Reels</span>
-          <i class="fa-solid fa-camera" style="cursor:pointer;" onclick="showToast('ਕੈਮਰਾ ਖੁੱਲ੍ਹ ਰਿਹਾ ਹੈ...')"></i>
-        </div>
-
-        <div class="reel-bottom">
-          <div class="reel-info">
-            <div class="reel-creator">
-              <img id="reel-user-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="creator">
-              <b id="reel-username">punjabi_vibes</b>
-              <button class="follow-btn" onclick="this.innerText = this.innerText === 'Follow' ? 'Following' : 'Follow'">Follow</button>
-            </div>
-            <p style="font-size:14px; margin-bottom:6px;">Desi vibes only 🔥 <br>#Punjab #Bhangra #DesiVibes</p>
-          </div>
-
-          <div class="reel-side-actions">
-            <div onclick="toggleLike(this.querySelector('i'))">
-              <i class="fa-solid fa-heart" style="color:#fff;"></i>
-              <span>48.2K</span>
-            </div>
-            <div><i class="fa-regular fa-comment"></i><span>1.2K</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= 4. EXPLORE SCREEN ================= -->
-    <div id="explore-screen" class="screen">
-      <div class="search-box">
-        <div class="search-input-wrap">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Search PUNJAB...">
-        </div>
-      </div>
-      <div class="category-tabs">
-        <span class="active">For You</span>
-        <span>Punjab Trends</span>
-        <span>Reels</span>
-        <span>Food</span>
-        <span>Travel</span>
-      </div>
-    </div>
-
-    <!-- ================= 5. PROFILE SCREEN ================= -->
-    <div id="profile-screen" class="screen">
-      <div class="profile-top-bar">
-        <span id="display-username">punjab_lover <i class="fa-solid fa-chevron-down" style="font-size:13px;"></i></span>
-        <i class="fa-solid fa-bars" style="cursor:pointer;" onclick="openModal('settings-modal')"></i>
-      </div>
-
-      <div class="scroll-area">
-        <div class="profile-stats-row">
-          <div class="profile-avatar-wrap" onclick="document.getElementById('dp-file-input').click()">
-            <img id="profile-dp-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="DP">
-            <div class="change-dp-badge"><i class="fa-solid fa-camera"></i></div>
-          </div>
-
-          <div class="stats-box">
-            <div><b>124</b><span>Posts</span></div>
-            <div><b>8.5K</b><span>Followers</span></div>
-            <div><b>356</b><span>Following</span></div>
-          </div>
-        </div>
-
-        <div class="profile-bio">
-          <b id="display-name">Punjab Lover 💛</b><br>
-          <span id="display-bio">Exploring Punjab | Food | Culture | People</span><br>
-          <span id="display-phone" style="font-size:12px; color:#666;">Phone: 98150XXXXX</span>
-        </div>
-
-        <div class="profile-actions">
-          <button class="btn-edit-profile" onclick="showToast('Edit Profile')">Edit Profile</button>
-        </div>
-
-        <div class="profile-grid">
-          <img src="https://images.unsplash.com/photo-1588096344356-9b497caeeb64?auto=format&fit=crop&w=400&q=80" alt="post">
-          <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=400&q=80" alt="post">
-          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=400&q=80" alt="post">
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= BOTTOM NAVIGATION BAR ================= -->
-    <div id="bottom-nav" class="bottom-nav" style="display: none;">
-      <div class="nav-item active" onclick="switchTab('home-screen', this)"><i class="fa-solid fa-house"></i><span>Home</span></div>
-      <div class="nav-item" onclick="switchTab('explore-screen', this)"><i class="fa-solid fa-magnifying-glass"></i><span>Explore</span></div>
-      <div class="nav-add-btn" onclick="document.getElementById('story-file-input').click()"><i class="fa-solid fa-plus"></i></div>
-      <div class="nav-item" onclick="switchTab('reels-screen', this)"><i class="fa-solid fa-clapperboard"></i><span>Reels</span></div>
-      <div class="nav-item" onclick="switchTab('profile-screen', this)"><i class="fa-regular fa-user"></i><span>Profile</span></div>
-    </div>
-
-    <!-- ================= MODALS ================= -->
-    <div id="story-viewer" class="modal-overlay" onclick="closeModal('story-viewer')">
-      <div style="width:100%;">
-        <div class="story-progress"><div class="story-progress-bar"></div></div>
-        <div class="story-top-user" onclick="event.stopPropagation()">
-          <div class="story-top-left">
-            <img id="story-viewer-dp" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="DP">
-            <div>
-              <b id="story-viewer-username" style="font-size:14px; display:block;">punjab_lover</b>
-              <span style="font-size:11px; opacity:0.85;">Just now</span>
-            </div>
-          </div>
-          <i class="fa-solid fa-xmark" style="font-size:22px; cursor:pointer;" onclick="closeModal('story-viewer')"></i>
-        </div>
-      </div>
-    </div>
-
-    <div id="settings-modal" class="modal-overlay" onclick="closeModal('settings-modal')">
-      <div class="bottom-sheet" onclick="event.stopPropagation()">
-        <div class="sheet-header">
-          <h3>Settings (ਸੈਟਿੰਗਜ਼)</h3>
-          <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" onclick="closeModal('settings-modal')"></i>
-        </div>
-        <div class="menu-option" onclick="document.getElementById('dp-file-input').click(); closeModal('settings-modal');">
-          <div><i class="fa-solid fa-camera"></i> Change Profile Photo</div>
-        </div>
-        <div class="menu-option" style="color:#ed4956;" onclick="logoutApp()">
-          <div><i class="fa-solid fa-right-from-bracket" style="color:#ed4956;"></i> Log Out</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    let userProfile = {
-      phone: "",
-      name: "Punjab Lover 💛",
-      username: "punjab_lover",
-      bio: "Exploring Punjab | Food | Culture | People",
-      dpUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
-      myStoryMedia: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80"
-    };
-
-    let generatedOTP = "";
-    let tempPhone = "";
-
-    function sendOTP() {
-      const phoneInput = document.getElementById('mobile-number-input').value.trim();
-      if (phoneInput.length < 10) {
-        showToast('ਕਿਰਪਾ ਕਰਕੇ ਸਹੀ 10 ਅੰਕਾਂ ਦਾ ਮੋਬਾਈਲ ਨੰਬਰ ਭਰੋ!');
-        return;
-      }
-
-      tempPhone = phoneInput;
-
-      // Check if number already registered in localStorage database
-      let registeredUsers = JSON.parse(localStorage.getItem('punjab_users') || "{}");
-      
-      generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
-      
-      document.getElementById('step-phone').style.display = 'none';
-      document.getElementById('step-otp').style.display = 'block';
-      
-      if (registeredUsers[tempPhone]) {
-        document.getElementById('otp-hint.innerText') = `ਇਹ ਨੰਬਰ ਪਹਿਲਾਂ ਹੀ ਰਜਿਸਟਰਡ ਹੈ। ਤੁਹਾਡਾ OTP ਹੈ: ${generatedOTP}`;
-      } else {
-        document.getElementById('otp-hint').innerText = `ਨਵਾਂ ਅਕਾਊਂਟ ਬਣ ਰਿਹਾ ਹੈ। ਤੁਹਾਡਾ OTP ਹੈ: ${generatedOTP}`;
-      }
-      showToast(`OTP ਭੇਜ ਦਿੱਤਾ ਗਿਆ ਹੈ: ${generatedOTP}`);
-    }
-
-    function verifyOTP() {
-      const enteredOTP = document.getElementById('otp-input').value.trim();
-      if (enteredOTP !== generatedOTP) {
-        showToast('ਗਲਤ OTP! ਕਿرਪਾ ਕਰਕੇ ਸਹੀ OTP ਭਰੋ।');
-        return;
-      }
-
-      // Check localStorage for duplicate number restriction
-      let registeredUsers = JSON.parse(localStorage.getItem('punjab_users') || "{}");
-
-      if (registeredUsers[tempPhone]) {
-        // Already exists, log in existing user
-        userProfile = registeredUsers[tempPhone];
-        showToast('ਵਾਪਸ ਆਉਣ ਲਈ ਜੀ ਆਇਆਂ ਨੂੰ! ਲੌਗਇਨ ਸਫਲ ਰਿਹਾ।');
-      } else {
-        // Register new user with this phone number
-        userProfile.phone = tempPhone;
-        userProfile.username = "user_" + tempPhone.slice(-4);
-        registeredUsers[tempPhone] = userProfile;
-        localStorage.setItem('punjab_users', JSON.stringify(registeredUsers));
-        showToast('ਨਵਾਂ ਅਕਾਊਂਟ ਕਾਮਯਾਬੀ ਨਾਲ ਬਣ ਗਿਆ! 🎉');
-      }
-
-      localStorage.setItem('punjab_current_user', JSON.stringify(userProfile));
-      openApp();
-    }
-
-    let storyTimer;
-
-    function openApp() {
-      document.getElementById('login-screen').classList.remove('active');
-      document.getElementById('home-screen').classList.add('active');
-      document.getElementById('bottom-nav').style.display = 'flex';
-      document.getElementById('status-bar').classList.remove('light');
-      syncUserProfileUI();
-    }
-
-    function logoutApp() {
-      closeModal('settings-modal');
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById('login-screen').classList.add('active');
-      document.getElementById('step-phone').style.display = 'block';
-      document.getElementById('step-otp').style.display = 'none';
-      document.getElementById('mobile-number-input').value = '';
-      document.getElementById('otp-input').value = '';
-      document.getElementById('bottom-nav').style.display = 'none';
-      document.getElementById('status-bar').classList.add('light');
-      showToast('ਲੌਗ ਆਉਟ ਹੋ ਗਿਆ ਹੈ');
-    }
-
-    function switchTab(screenId, navEl) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(screenId).classList.add('active');
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      if (navEl) navEl.classList.add('active');
-      const statusBar = document.getElementById('status-bar');
-      if (screenId === 'reels-screen') {
-        statusBar.classList.add('light');
-      } else {
-        statusBar.classList.remove('light');
-      }
-    }
-
-    function handleProfilePhotoUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        userProfile.dpUrl = e.target.result;
-        syncUserProfileUI();
-        showToast('ਪ੍ਰੋਫਾਈਲ ਫੋਟੋ ਅਪਡੇਟ ਹੋ ਗਈ! ✅');
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function handleStoryUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        userProfile.myStoryMedia = e.target.result;
-        showToast('ਸਟੋਰੀ ਲੱਗ ਗਈ ਹੈ! 🎉');
-        openMyStory();
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function syncUserProfileUI() {
-      document.getElementById('profile-dp-img').src = userProfile.dpUrl;
-      document.getElementById('home-story-user-dp').src = userProfile.dpUrl;
-      document.getElementById('story-viewer-dp').src = userProfile.dpUrl;
-      document.getElementById('display-username').innerHTML = `${userProfile.username} <i class="fa-solid fa-chevron-down" style="font-size:13px;"></i>`;
-      document.getElementById('display-name').innerText = userProfile.name;
-      document.getElementById('display-bio').innerText = userProfile.bio;
-      document.getElementById('display-phone').innerText = `Phone: ${userProfile.phone}`;
-    }
-
-    function openMyStory() {
-      const viewer = document.getElementById('story-viewer');
-      document.getElementById('story-viewer-dp').src = userProfile.dpUrl;
-      document.getElementById('story-viewer-username').innerText = userProfile.username + " (Your Story)";
-      viewer.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 100%), url('${userProfile.myStoryMedia}')`;
-      viewer.classList.add('active');
-      clearTimeout(storyTimer);
-      storyTimer = setTimeout(() => { closeModal('story-viewer'); }, 4000);
-    }
-
-    function viewOtherStory(username, dpUrl, mediaUrl) {
-      const viewer = document.getElementById('story-viewer');
-      document.getElementById('story-viewer-dp').src = dpUrl;
-      document.getElementById('story-viewer-username').innerText = username;
-      viewer.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 100%), url('${mediaUrl}')`;
-      viewer.classList.add('active');
-      clearTimeout(storyTimer);
-      storyTimer = setTimeout(() => { closeModal('story-viewer'); }, 4000);
-    }
-
-    function toggleLike(icon) {
-      if (icon.classList.contains('fa-regular')) {
-        icon.classList.remove('fa-regular');
-        icon.classList.add('fa-solid');
-        icon.style.color = '#ed4956';
-      } else {
-        icon.classList.remove('fa-solid');
-        icon.classList.add('fa-regular');
-        icon.style.color = '';
-      }
-    }
-
-    function openModal(id) { document.getElementById(id).classList.add('active'); }
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('active');
-      if (id === 'story-viewer') clearTimeout(storyTimer);
-    }
-
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.innerText = msg;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 2500);
-    }
-  </script>
 </body>
 </html>
