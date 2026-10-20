@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Punjab - Social App</title>
+    <title>Instagram - Punjab</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
@@ -14,8 +14,8 @@
             -webkit-tap-highlight-color: transparent;
         }
         body {
-            background-color: #000;
-            color: #fff;
+            background-color: #fafafa;
+            color: #262626;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -23,68 +23,62 @@
         }
         .phone-frame {
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             height: 100vh;
-            max-height: 850px;
-            background: url('watermarked_img_13770963300162300816.png') no-repeat center center;
-            background-size: cover;
+            max-height: 800px;
+            background: #fff;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 40px 20px;
+            padding: 20px;
+            border: 1px solid #dbdbdb;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .phone-frame::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 1;
+        .insta-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #efefef;
         }
-        .logo-container, .login-box {
-            position: relative;
-            z-index: 2;
+        .content-area {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-        .logo-container {
-            margin-top: 40px;
+            justify-content: center;
+            flex-grow: 1;
+            gap: 20px;
         }
         .logo-img {
-            width: 110px;
-            height: 110px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transform: rotate(0deg);
+            border: 2px solid #e1306c;
+            padding: 2px;
         }
         .login-box {
-            background: rgba(20, 20, 20, 0.85);
-            padding: 25px 20px;
-            border-radius: 16px;
             width: 100%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
         .input-field {
             width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: #fff;
+            padding: 12px;
+            background: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 6px;
             font-size: 14px;
             outline: none;
         }
-        .input-field::placeholder {
-            color: #bbb;
+        .input-field:focus {
+            border-color: #a8a8a8;
         }
         .login-btn {
             width: 100%;
@@ -93,29 +87,43 @@
             border: none;
             border-radius: 8px;
             color: #fff;
-            font-weight: bold;
-            font-size: 15px;
+            font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
-            transition: background 0.2s;
         }
-        .login-btn:hover {
-            background: #1877f2;
+        .login-btn:active {
+            opacity: 0.7;
+        }
+        .insta-footer {
+            font-size: 12px;
+            color: #8e8e8e;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
     <div class="phone-frame">
-        <!-- ਸਹੀ ਅਤੇ ਸਿੱਧੇ ਲੋਗੋ ਵਾਲਾ ਹਿੱਸਾ -->
-        <div class="logo-container">
-            <img src="watermarked_img_13770963300162300816.png" alt="Punjab Logo" class="logo-img">
+        <!-- Instagram Top Bar -->
+        <div class="insta-header">
+            <span><i class="fa-solid fa-lock"></i> user_8065</span>
+            <i class="fa-solid fa-bars"></i>
         </div>
 
-        <!-- ਯੂਜ਼ਰ ਆਈਡੀ ਅਤੇ ਪਾਸਵਰਡ ਲੌਗਇਨ ਫਾਰਮ -->
-        <div class="login-box">
-            <input type="text" class="input-field" placeholder="ਯੂਜ਼ਰ ਆਈਡੀ (User ID)" required>
-            <input type="password" class="input-field" placeholder="ਪਾਸਵਰਡ (Password)" required>
-            <button class="login-btn">ਲੌਗਇਨ ਕਰੋ</button>
+        <!-- Center Content / Profile & Login -->
+        <div class="content-area">
+            <img src="watermarked_img_13770963300162300816.png" alt="Punjab Logo" class="logo-img">
+            
+            <div class="login-box">
+                <input type="text" class="input-field" placeholder="Phone number, username, or email" required>
+                <input type="password" class="input-field" placeholder="Password" required>
+                <button class="login-btn">Log in</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="insta-footer">
+            Instagram from Meta
         </div>
     </div>
 
